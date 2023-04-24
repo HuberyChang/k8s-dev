@@ -1,0 +1,6 @@
+apiVersion: webserverapp.my.domain/v1
+kind: Webserver
+metadata:
+  name: webserver-sample
+spec:
+  # TODO(user): Add fields here

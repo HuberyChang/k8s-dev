@@ -1,0 +1,24 @@
+# permissions for end users to edit webservers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: webserver-editor-role
+rules:
+- apiGroups:
+  - webserverapp.my.domain
+  resources:
+  - webservers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - webserverapp.my.domain
+  resources:
+  - webservers/status
+  verbs:
+  - get
