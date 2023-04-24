@@ -23,19 +23,21 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// WebserverSpec defines the desired state of Webserver
-type WebserverSpec struct {
+// WebServerSpec defines the desired state of WebServer
+type WebServerSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of Webserver. Edit webserver_types.go to remove/update
-	// Foo string `json:"foo,omitempty"`
-	Replicas int    `json:"replicas,omitempty"`
-	Image    string `json:"image,omitempty"`
+	// Foo is an example field of WebServer. Edit webserver_types.go to remove/update
+	//Foo string `json:"foo,omitempty"`
+
+	Replicas int `json:"replicas,omitempty"`
+
+	Image string `json:"image,omitempty"`
 }
 
-// WebserverStatus defines the observed state of Webserver
-type WebserverStatus struct {
+// WebServerStatus defines the observed state of WebServer
+type WebServerStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
@@ -43,24 +45,24 @@ type WebserverStatus struct {
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// Webserver is the Schema for the webservers API
-type Webserver struct {
+// WebServer is the Schema for the webservers API
+type WebServer struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   WebserverSpec   `json:"spec,omitempty"`
-	Status WebserverStatus `json:"status,omitempty"`
+	Spec   WebServerSpec   `json:"spec,omitempty"`
+	Status WebServerStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// WebserverList contains a list of Webserver
-type WebserverList struct {
+// WebServerList contains a list of WebServer
+type WebServerList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Webserver `json:"items"`
+	Items           []WebServer `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&Webserver{}, &WebserverList{})
+	SchemeBuilder.Register(&WebServer{}, &WebServerList{})
 }

@@ -5,7 +5,7 @@ metadata:
   name: webserver-viewer-role
 rules:
 - apiGroups:
-  - webserverapp.my.domain
+  - my.domain
   resources:
   - webservers
   verbs:
@@ -13,7 +13,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - webserverapp.my.domain
+  - my.domain
   resources:
   - webservers/status
   verbs:

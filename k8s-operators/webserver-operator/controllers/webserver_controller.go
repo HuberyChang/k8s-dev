@@ -18,50 +18,48 @@ package controllers
 
 import (
 	"context"
-	"time"
-
-	"k8s.io/apimachinery/pkg/util/intstr"
-
+	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"k8s.io/apimachinery/pkg/types"
 
-	"k8s.io/apimachinery/pkg/api/errors"
-
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/util/intstr"
+	"time"
+
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	webserverappv1 "github.com/huberychang/webserver-operator/api/v1"
+	mydomainv1 "github.com/huberychang/webserver-operator/api/v1"
 )
 
-// WebserverReconciler reconciles a Webserver object
-type WebserverReconciler struct {
+// WebServerReconciler reconciles a WebServer object
+type WebServerReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
 }
 
-//+kubebuilder:rbac:groups=webserverapp.my.domain,resources=webservers,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=webserverapp.my.domain,resources=webservers/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=webserverapp.my.domain,resources=webservers/finalizers,verbs=update
+//+kubebuilder:rbac:groups=my.domain,resources=webservers,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=my.domain,resources=webservers/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=my.domain,resources=webservers/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
 // TODO(user): Modify the Reconcile function to compare the state specified by
-// the Webserver object against the actual cluster state, and then
+// the WebServer object against the actual cluster state, and then
 // perform operations to make the cluster state reflect the state specified by
 // the user.
 //
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.12.1/pkg/reconcile
-func (r *WebserverReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (r *WebServerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
 
 	// TODO(user): your logic here
-	instance := &webserverappv1.Webserver{}
+	instance := &mydomainv1.WebServer{}
 
 	err := r.Get(ctx, req.NamespacedName, instance)
 	if err != nil {
@@ -147,7 +145,7 @@ func (r *WebserverReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 	return ctrl.Result{RequeueAfter: time.Second * 10}, nil
 }
 
-func (r *WebserverReconciler) createDeployment(server *webserverappv1.Webserver) (*appsv1.Deployment, error) {
+func (r *WebServerReconciler) createDeployment(server *mydomainv1.WebServer) (*appsv1.Deployment, error) {
 	replicas := int32(server.Spec.Replicas)
 	deploy := &appsv1.Deployment{
 		TypeMeta: metav1.TypeMeta{
@@ -192,7 +190,7 @@ func (r *WebserverReconciler) createDeployment(server *webserverappv1.Webserver)
 	return deploy, nil
 }
 
-func (r *WebserverReconciler) createService(server *webserverappv1.Webserver) (*corev1.Service, error) {
+func (r *WebServerReconciler) createService(server *mydomainv1.WebServer) (*corev1.Service, error) {
 	svc := &corev1.Service{
 		TypeMeta: metav1.TypeMeta{
 			Kind:       "Service",
@@ -227,8 +225,8 @@ func (r *WebserverReconciler) createService(server *webserverappv1.Webserver) (*
 }
 
 // SetupWithManager sets up the controller with the Manager.
-func (r *WebserverReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *WebServerReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&webserverappv1.Webserver{}).
+		For(&mydomainv1.WebServer{}).
 		Complete(r)
 }

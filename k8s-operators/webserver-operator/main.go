@@ -31,7 +31,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	webserverappv1 "github.com/huberychang/webserver-operator/api/v1"
+	mydomainv1 "github.com/huberychang/webserver-operator/api/v1"
 	"github.com/huberychang/webserver-operator/controllers"
 	//+kubebuilder:scaffold:imports
 )
@@ -44,7 +44,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
-	utilruntime.Must(webserverappv1.AddToScheme(scheme))
+	utilruntime.Must(mydomainv1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
@@ -89,11 +89,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controllers.WebserverReconciler{
+	if err = (&controllers.WebServerReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "Webserver")
+		setupLog.Error(err, "unable to create controller", "controller", "WebServer")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

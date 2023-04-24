@@ -9,8 +9,7 @@ resources:
     namespaced: true
   controller: true
   domain: my.domain
-  group: webserverapp
-  kind: Webserver
+  kind: WebServer
   path: github.com/huberychang/webserver-operator/api/v1
   version: v1
 version: "3"

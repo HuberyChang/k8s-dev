@@ -30,7 +30,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	webserverappv1 "github.com/huberychang/webserver-operator/api/v1"
+	mydomainv1 "github.com/huberychang/webserver-operator/api/v1"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -64,7 +64,7 @@ var _ = BeforeSuite(func() {
 	Expect(err).NotTo(HaveOccurred())
 	Expect(cfg).NotTo(BeNil())
 
-	err = webserverappv1.AddToScheme(scheme.Scheme)
+	err = mydomainv1.AddToScheme(scheme.Scheme)
 	Expect(err).NotTo(HaveOccurred())
 
 	//+kubebuilder:scaffold:scheme
